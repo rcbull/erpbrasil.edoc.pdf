@@ -4,4 +4,4 @@ Installation
 
 At the command line::
 
-    pip install erpbrasil.edoc.pdf
+    pip install erpbrasil.edoc2.pdf

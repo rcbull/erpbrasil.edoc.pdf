@@ -1,7 +1,7 @@
 
 from click.testing import CliRunner
 
-from erpbrasil.edoc.pdf.cli import main
+from erpbrasil.edoc2.pdf.cli import main
 
 
 def test_main():

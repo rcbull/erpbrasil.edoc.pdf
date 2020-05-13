@@ -4,4 +4,4 @@ Reference
 .. toctree::
     :glob:
 
-    erpbrasil.edoc.pdf*
+    erpbrasil.edoc2.pdf*

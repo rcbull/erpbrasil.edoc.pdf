@@ -7,5 +7,5 @@ lookup = etree.ElementNamespaceClassLookup(
 parser = etree.XMLParser()
 parser.set_element_class_lookup(lookup)
 
-from erpbrasil.edoc.pdf import nfe
-from erpbrasil.edoc.pdf.base import ImprimirXml
+from erpbrasil.edoc2.pdf import nfe
+from erpbrasil.edoc2.pdf.base import ImprimirXml

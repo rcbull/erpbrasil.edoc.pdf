@@ -5,7 +5,7 @@ from uuid import uuid4
 from py3o.template import Template
 import sh
 from lxml import objectify, etree
-from erpbrasil.edoc.pdf import parser
+from erpbrasil.edoc2.pdf import parser
 import tempfile
 
 #cte_namespace = lookup.get_namespace('http://www.portalfiscal.inf.br/cte')

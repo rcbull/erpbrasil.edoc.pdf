@@ -16,7 +16,7 @@ extensions = [
 ]
 source_suffix = '.rst'
 master_doc = 'index'
-project = 'erpbrasil.edoc.pdf'
+project = 'erpbrasil.edoc2.pdf'
 year = '2020'
 author = 'KMEE'
 copyright = '{0}, {1}'.format(year, author)
@@ -25,8 +25,8 @@ version = release = '0.0.0'
 pygments_style = 'trac'
 templates_path = ['.']
 extlinks = {
-    'issue': ('https://github.com/erpbrasil/erpbrasil.edoc.pdf/issues/%s', '#'),
-    'pr': ('https://github.com/erpbrasil/erpbrasil.edoc.pdf/pull/%s', 'PR #'),
+    'issue': ('https://github.com/erpbrasil/erpbrasil.edoc2.pdf/issues/%s', '#'),
+    'pr': ('https://github.com/erpbrasil/erpbrasil.edoc2.pdf/pull/%s', 'PR #'),
 }
 # on_rtd is whether we are on readthedocs.org
 on_rtd = os.environ.get('READTHEDOCS', None) == 'True'

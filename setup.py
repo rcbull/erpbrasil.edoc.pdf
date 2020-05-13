@@ -24,7 +24,7 @@ def read(*names, **kwargs):
 
 
 setup(
-    name='erpbrasil.edoc.pdf',
+    name='erpbrasil.edoc2.pdf',
     version='0.0.0',
     license='MIT',
     description='Impressão de documentos fiscais a partir do XML: NF-E, NFC-E, CT-E, MDF-E, GNRE e etc.',
@@ -34,7 +34,7 @@ setup(
     ),
     author='KMEE',
     author_email='dev@kmee.com.br',
-    url='https://github.com/erpbrasil/erpbrasil.edoc.pdf',
+    url='https://github.com/erpbrasil/erpbrasil.edoc2.pdf',
     packages=find_packages('src'),
     package_dir={'': 'src'},
     py_modules=[splitext(basename(path))[0] for path in glob('src/*.py')],
@@ -67,7 +67,7 @@ setup(
     project_urls={
         'Documentation': 'https://erpbrasiledocpdf.readthedocs.io/',
         'Changelog': 'https://erpbrasiledocpdf.readthedocs.io/en/latest/changelog.html',
-        'Issue Tracker': 'https://github.com/erpbrasil/erpbrasil.edoc.pdf/issues',
+        'Issue Tracker': 'https://github.com/erpbrasil/erpbrasil.edoc2.pdf/issues',
     },
     keywords=[
         # eg: 'keyword1', 'keyword2', 'keyword3',
@@ -91,7 +91,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'erpbrasil-edoc-pdf = erpbrasil.edoc.pdf.cli:main',
+            'erpbrasil-edoc-pdf = erpbrasil.edoc2.pdf.cli:main',
         ]
     },
 )

@@ -1,5 +1,5 @@
 from os import walk, path
-from erpbrasil.edoc.pdf import base
+from erpbrasil.edoc2.pdf import base
 
 PATH = 'xml'
 OUTPUT = 'output'

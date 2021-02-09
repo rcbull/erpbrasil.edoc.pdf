@@ -7,17 +7,12 @@ Overview
 .. list-table::
     :stub-columns: 1
 
-    * - docs
-      - |docs|
     * - tests
       - | |travis| |appveyor| |requires|
         | |coveralls| |codecov|
     * - package
       - | |version| |wheel| |supported-versions| |supported-implementations|
         | |commits-since|
-.. |docs| image:: https://readthedocs.org/projects/erpbrasil.edoc.pdf/badge/?style=flat
-    :target: https://readthedocs.org/projects/erpbrasiledocpdf
-    :alt: Documentation Status
 
 .. |travis| image:: https://api.travis-ci.org/erpbrasil/erpbrasil.edoc.pdf.svg?branch=master
     :alt: Travis-CI Build Status
@@ -55,9 +50,9 @@ Overview
     :alt: Supported implementations
     :target: https://pypi.org/project/erpbrasil.edoc.pdf
 
-.. |commits-since| image:: https://img.shields.io/github/commits-since/erpbrasil/erpbrasil.edoc.pdf/v0.0.0.svg
+.. |commits-since| image:: https://img.shields.io/github/commits-since/erpbrasil/erpbrasil.edoc.pdf/v0.1.1.svg
     :alt: Commits since latest release
-    :target: https://github.com/erpbrasil/erpbrasil.edoc.pdf/compare/v0.0.0...master
+    :target: https://github.com/erpbrasil/erpbrasil.edoc.pdf/compare/v0.1.1...master
 
 
 
@@ -82,9 +77,7 @@ You can also install the in-development version with::
 Documentation
 =============
 
-
-https://erpbrasiledocpdf.readthedocs.io/
-
+https://erpbrasil.github.io/docs/
 
 Development
 ===========

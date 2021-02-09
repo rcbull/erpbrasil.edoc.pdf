@@ -1,19 +1,15 @@
 # -*- coding: utf-8 -*-
+import base64
 import locale
+from datetime import datetime
 
 import pytz
-import base64
-
-from genshi import Markup
-from reportlab.graphics.barcode import createBarcodeDrawing
-from datetime import datetime
 from dateutil.parser import parse
-
 from erpbrasil.base.fiscal.cnpj_cpf import formata as formata_CNPJ
 from erpbrasil.base.fiscal.cnpj_cpf import formata as formata_CPF
-
 from erpbrasil.base.misc import format_zipcode
-formata_CEP = lambda cep: format_zipcode(cep, 'BR')
+from genshi import Markup
+from reportlab.graphics.barcode import createBarcodeDrawing
 
 
 def formata_decimal(numero, digitos):
@@ -24,33 +20,46 @@ def formata_decimal(numero, digitos):
     formato = '%.' + str(digitos) + 'f'
     return locale.format(formato, numero, grouping=True)
 
-formata_vBC = lambda valor: formata_decimal(valor,2)
-formata_vICMS = lambda valor: formata_decimal(valor,2)
-formata_vBCST = lambda valor: formata_decimal(valor,2)
-formata_vST = lambda valor: formata_decimal(valor,2)
-formata_vTotTrib = lambda valor: formata_decimal(valor,2)
-formata_vProd = lambda valor: formata_decimal(valor,2)
-formata_vFrete = lambda valor: formata_decimal(valor,2)
-formata_vSeg = lambda valor: formata_decimal(valor,2)
-formata_vDesc = lambda valor: formata_decimal(valor,2)
-formata_vOutro = lambda valor: formata_decimal(valor,2)
-formata_vIPI = lambda valor: formata_decimal(valor,2)
-formata_vNF = lambda valor: formata_decimal(valor,2)
-formata_qCom = lambda valor: formata_decimal(valor,2)
-formata_vUnCom = lambda valor: formata_decimal(valor,2)
-formata_vProd = lambda valor: formata_decimal(valor,2)
-formata_pIPI = lambda valor: formata_decimal(valor,2)
-formata_vOrig = lambda valor: formata_decimal(valor,2)
-formata_vDesc = lambda valor: formata_decimal(valor,2)
-formata_vLiq = lambda valor: formata_decimal(valor,2)
-formata_vDup = lambda valor: formata_decimal(valor,2)
-formata_pesoB = lambda valor: formata_decimal(valor,2)
-formata_pesoL = lambda valor: formata_decimal(valor,2)
-formata_pICMS = lambda valor: formata_decimal(valor,2)
+
+def formata_duas_casas(valor):
+    return formata_decimal(valor, 2)
+
+
+def formata_tres_casas(valor):
+    return formata_decimal(valor, 3)
+
+
+def formata_cinco_casas(valor):
+    return formata_decimal(valor, 5)
+
+
+formata_vBC = formata_duas_casas
+formata_vICMS = formata_duas_casas
+formata_vBCST = formata_duas_casas
+formata_vST = formata_duas_casas
+formata_vTotTrib = formata_duas_casas
+formata_vProd = formata_duas_casas
+formata_vFrete = formata_duas_casas
+formata_vSeg = formata_duas_casas
+formata_vDesc = formata_duas_casas
+formata_vOutro = formata_duas_casas
+formata_vIPI = formata_duas_casas
+formata_vNF = formata_duas_casas
+formata_qCom = formata_tres_casas
+formata_vUnCom = formata_cinco_casas
+formata_vProd = formata_duas_casas
+formata_pIPI = formata_duas_casas
+formata_vOrig = formata_duas_casas
+formata_vDesc = formata_duas_casas
+formata_vLiq = formata_duas_casas
+formata_vDup = formata_duas_casas
+formata_pesoB = formata_duas_casas
+formata_pesoL = formata_duas_casas
+formata_pICMS = formata_duas_casas
 
 
 def formata_fone(fone):
-    if not len(fone.strip()):
+    if not fone or not len(fone.strip()):
         return ''
 
     if fone.strip() == '0':
@@ -74,7 +83,7 @@ def formata_fone(fone):
     else:
         numero = fone[4:]
         if len(numero) == 9:
-            numero  = numero[0] + ' ' + numero[1:4] + '-' + numero[4:]
+            numero = numero[0] + ' ' + numero[1:4] + '-' + numero[4:]
         else:
             numero = numero[0:4] + '-' + numero[4:]
         ddd = fone[2:4]
@@ -85,7 +94,6 @@ def formata_fone(fone):
 
 
 def modFrete_formatado(NFe):
-
     modFrete = int(NFe.infNFe.transp.modFrete.text)
 
     if modFrete == 0:
@@ -108,9 +116,10 @@ def modFrete_formatado(NFe):
 
     return formatado
 
+
 def formata_placa(placa):
-        placa = placa[:-4] + '-' + placa[-4:]
-        return placa
+    placa = placa[:-4] + '-' + placa[-4:]
+    return placa
 
 
 def formata_dhRecbto(dhRecbto):
@@ -159,8 +168,8 @@ def endereco_emitente_formatado(NFe):
     formatado = str(NFe.infNFe.emit.enderEmit.xLgr)
     formatado += ', ' + str(NFe.infNFe.emit.enderEmit.nro)
 
-    if hasattr(NFe.infNFe.emit.enderEmit, 'xCpl') and \
-        len(str(NFe.infNFe.emit.enderEmit.xCpl).strip()):
+    if (hasattr(NFe.infNFe.emit.enderEmit, 'xCpl') and
+            len(str(NFe.infNFe.emit.enderEmit.xCpl).strip())):
         formatado += ' - ' + str(NFe.infNFe.emit.enderEmit.xCpl)
 
     return formatado
@@ -217,7 +226,7 @@ def endereco_emitente_formatado_linha_1(NFe):
 def endereco_emitente_formatado_linha_2(NFe):
     formatado = str(NFe.infNFe.emit.enderEmit.xMun)
     formatado += ' - ' + str(NFe.infNFe.emit.enderEmit.UF)
-    formatado += ' - ' + NFe.infNFe.emit.enderEmit.CEP
+    formatado += ' - ' + format_zipcode(NFe.infNFe.emit.enderEmit.CEP, 'BR')
     return formatado
 
 
@@ -230,7 +239,7 @@ def endereco_emitente_formatado_linha_3(NFe):
 
 
 def endereco_emitente_formatado_linha_4(NFe):
-    #return NFe.site or NFe.infNFe.emit.email.valor or '' # TODO: De onde vem o site
+    # return NFe.site or NFe.infNFe.emit.email.valor or '' # TODO: De onde vem o site
     if hasattr(NFe.infNFe.emit, 'email'):
         return str(NFe.infNFe.emit.email)
     else:
@@ -274,14 +283,17 @@ def monta_chave(NFe):
 
 def chave_formatada(NFe):
     chave = monta_chave(NFe)
-    chave = chave.replace('.', '').replace('-','').replace('/','')
-    chave_formatada = ' '.join((chave[0:4], chave[4:8], chave[8:12], chave[12:16], chave[16:20], chave[20:24], chave[24:28], chave[28:32], chave[32:36], chave[36:40], chave[40:44]))
+    chave = chave.replace('.', '').replace('-', '').replace('/', '')
+    chave_formatada = ' '.join((
+        chave[0:4], chave[4:8], chave[8:12], chave[12:16], chave[16:20],
+        chave[20:24], chave[24:28], chave[28:32], chave[32:36],
+        chave[36:40], chave[40:44]))
     return chave_formatada
 
 
 def chave_imagem(NFe):
     chave = monta_chave(NFe)
-    chave = chave = chave.replace('.', '').replace('-','').replace('/','')
+    chave = chave = chave.replace('.', '').replace('-', '').replace('/', '')
     #
     # Para converter centímetros para o tamanho do reportlab, use a
     # seguinte fórmula:
@@ -290,7 +302,7 @@ def chave_imagem(NFe):
     # Assim: 0,8 cm = 0,8 × 128 ÷ 2,75 = 37,2 = 37
     # Assim: 0,02 cm = 0,02 × 128 ÷ 2,75 = 0,9 = 1
     #
-    imagem = createBarcodeDrawing('Code128', value= chave,
+    imagem = createBarcodeDrawing('Code128', value=chave,
                                   barHeight=37, barWidth=1)
     return base64.b64encode(imagem.asString('png')).decode('utf-8')
 
@@ -356,10 +368,14 @@ def fatura_a_prazo(NFe):
     if (str(NFe.infNFe.ide.indPag) == '1' or
         len(str(NFe.infNFe.cobr.dup)) > 1 or
         ((len(str(NFe.infNFe.cobr.dup)) == 1) and
-         (datetime.strptime(str(NFe.infNFe.cobr.dup[0].dVenc), '%Y-%m-%d').toordinal() > datetime.strptime(str(NFe.infNFe.ide.dEmi.toordinal()), '%Y-%m-%d').toordinal()))):
+         (datetime.strptime(str(NFe.infNFe.cobr.dup[0].dVenc),
+                            '%Y-%m-%d').toordinal() > datetime.strptime(
+             str(NFe.infNFe.ide.dEmi.toordinal()),
+             '%Y-%m-%d').toordinal()))):
         return True
 
     return False
+
 
 def fatura_a_vista(NFe):
     if not (len(str(NFe.infNFe.cobr.fat.nFat)) or
@@ -379,6 +395,7 @@ def numero_item(det):
 
 def regime_tributario(NFe):
     return int(NFe.infNFe.emit.CRT.text)
+
 
 def cst_formatado(det):
     formatado = str(det.imposto.ICMS.tipoICMS.orig).zfill(1)
@@ -465,5 +482,3 @@ def aliquota_icms(det):
     if str(det.imposto.ICMS.tipoICMS.CST) == '60':
         return formata_decimal(det.imposto.ICMS.tipoICMS.pST.text, 2)
     return det.imposto.ICMS.tipoICMS.pICMS
-
-
